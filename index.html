@@ -16,20 +16,17 @@
         
         h1 { text-align: center; font-size: 26px; margin-bottom: 20px; }
 
-        
         .booking-section { background: var(--bg-light); padding: 15px; border-radius: 15px; border: 1px solid var(--primary); margin-bottom: 20px; }
         .booking-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
         .booking-row label { font-weight: bold; font-size: 14px; }
-        .booking-row input { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; }
+        .booking-row input { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; width: 100%; box-sizing: border-box; }
         .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-     
         .tabs-container { display: flex; overflow-x: auto; gap: 10px; margin-bottom: 15px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; scrollbar-width: none; }
         .tabs-container::-webkit-scrollbar { display: none; }
         .tab-btn { padding: 10px 20px; border: none; background: #eee; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: bold; transition: 0.3s; }
         .tab-btn.active { background: var(--primary); color: white; }
 
-        
         .menu-page { display: none; }
         .menu-page.active { display: block; }
         .item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
@@ -38,13 +35,11 @@
         .item-desc { font-size: 13px; color: #777; line-height: 1.4; }
         .item-price { font-weight: bold; color: var(--primary); margin-top: 5px; }
 
-       
         .controls { display: flex; align-items: center; gap: 12px; }
         .q-btn { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--primary); background: white; color: var(--primary); font-size: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .q-btn:disabled { border-color: #ccc; color: #ccc; }
         .q-num { font-weight: bold; min-width: 20px; text-align: center; font-size: 18px; }
 
-       
         .footer { position: sticky; bottom: 0; background: white; padding: 20px 0 10px 0; border-top: 2px solid var(--primary); margin-top: 20px; }
         .total-row { font-size: 22px; font-weight: bold; text-align: right; margin-bottom: 15px; }
         .send-btn { width: 100%; padding: 18px; background: #2ecc71; color: white; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 12px rgba(46,204,113,0.3); }
@@ -57,6 +52,14 @@
     <h1>Bestilling</h1>
 
     <div class="booking-section">
+        <div class="booking-row">
+            <label>Navn :</label>
+            <input type="text" id="user-name" placeholder="Ditt navn">
+        </div>
+        <div class="booking-row">
+            <label>Telefon :</label>
+            <input type="tel" id="user-phone" placeholder="Ditt telefonnummer">
+        </div>
         <div class="booking-row">
             <label>Antall personer:</label>
             <input type="number" id="guests" value="1" min="1">
@@ -74,7 +77,6 @@
     </div>
 
     <div class="tabs-container" id="tabs"></div>
-
     <div id="menu-content"></div>
 
     <div class="footer">
@@ -84,38 +86,36 @@
 </div>
 
 <script>
-    
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwPc5Gb4eQ7LyCXr9Vjg_uEVeCKgrWR7D7MuWXlsFb05BthMg9_OPwaxTrNjK9UmJi9/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhT275JEQ_0RLzrdqfZtOHFYugjcugyoihPakfUFzlG02aIRz3SuleJtkrsB2aAknu/exec';
 
     const menuData = {
-        "Dagens": [
-            { id: "d1", name: "Dagens", desc: "Dagens utvalgte rett fra kjøkkenet", price: 0, displayPrice: "$$$" }
-        ],
-        "Lunsj": [
-            { id: "l1", name: "Cæsarsalat", desc: "Kylling, bacon, parmesan, brød", price: 185 },
-            { id: "l2", name: "Husets Burger", desc: "Heimelaga burger med pommes frites", price: 275 },
-            { id: "l3", name: "Kyllingsandwich", desc: "Ciabatta med fetaostdressing", price: 220 },
-            { id: "l4", name: "Ciabatta ost og skinke", desc: "Nysteikt ciabatta med salat", price: 100 },
-            { id: "l5", name: "Ciabatta røykelaks", desc: "Med eggerøre og salat", price: 120 }
+        "Dagens": [{ id: "d1", name: "Dagens", desc: "Dagens utvalgte rett", price: 0, displayPrice: "$$$" }],
+        "Menu": [
+            { id: "l1", name: "Cæsarsalat", desc: "Salat, dressing, kylling, bacon, parmesan, brød", price: 185 },
+            { id: "l2", name: "Husets Burger", desc: "Heimelaga burger, pommes frites", price: 275 },
+            { id: "l3", name: "Kyllingsandwich", desc: "Ciabatta, kylling, fetaostdressing, pommes", price: 220 },
+            { id: "l4", name: "Ciabatta ost og skinke", desc: "Ost, skinke, salat, smør", price: 100 },
+            { id: "l5", name: "Ciabatta røykelaks", desc: "Røykelaks, eggerøre, salat, smør", price: 120 }
         ],
         "Pizza": [
-            { id: "p1", name: "Margarita", desc: "Tomatsaus, ost", price: 150 },
-            { id: "p2", name: "Silliana", desc: "Salami, rød saus, ost", price: 170 },
-            { id: "p3", name: "Cæsar Pizza", desc: "Kvit saus, kylling, bacon", price: 180 },
-            { id: "p4", name: "Nduja Pizza", desc: "Sterk pølse, løk, kjøttdeig", price: 180 },
-            { id: "p5", name: "Pesto-pizza", desc: "Feta, oliven, pesto", price: 170 }
+            { id: "p1", name: "Margarita", desc: "Rød saus, ost", price: 150 },
+            { id: "p2", name: "Silliana", desc: "Silliana salami, ost", price: 170 },
+            { id: "p3", name: "Cæsar", desc: "Kvit saus, kylling, tomat, bacon, ost", price: 180 },
+            { id: "p4", name: "Nduja", desc: "Nduja, løk, kjøttdeig, ost", price: 180 },
+            { id: "p5", name: "Pesto-pizza", desc: "Feta, oliven, pesto, ost", price: 170 },
+            { id: "p6", name: "Hangoveren", desc: "Pepperoni, kjøttdeig, fries, kvitløksdressing", price: 190 }
         ],
         "Pasta": [
             { id: "pa1", name: "Carbonara", desc: "Fløte, bacon, egg, parmesan", price: 165 },
-            { id: "pa2", name: "Nduja-pasta", desc: "Sterk nduja, kvitløk, løk", price: 175 },
-            { id: "pa3", name: "Kyllingpasta", desc: "Pesto, fløte, kylling", price: 170 },
+            { id: "pa2", name: "Nduja-pasta", desc: "Nduja, kvitløk, løk, parmensan", price: 175 },
+            { id: "pa3", name: "Kyllingpasta", desc: "Pesto, fløte, kylling, parmesan", price: 170 },
             { id: "pa4", name: "Bolognese", desc: "Kjøttdeig, rød saus, parmesan", price: 170 }
         ],
         "Dessert & Barn": [
-            { id: "b1", name: "Barnemeny Pizza", desc: "Ost og skinke", price: 99 },
-            { id: "b2", name: "Barnemeny Burger", desc: "Med pommes frites", price: 99 },
-            { id: "d1", name: "Gulrotkake", desc: "Husets kake med topping", price: 85 },
-            { id: "d2", name: "Lun Brownies", desc: "Med is og salt karamell", price: 85 }
+            { id: "de1", name: "Gulrotkake", desc: "Husets gulrotkake", price: 85 },
+            { id: "de2", name: "Lun Brownies", desc: "Salt karamell и is", price: 85 },
+            { id: "b1", name: "Barnemeny Minipizza", desc: "Ost og skinke", price: 99 },
+            { id: "b2", name: "Barnemeny Burger", desc: "Med fries", price: 99 }
         ]
     };
 
@@ -127,14 +127,12 @@
         document.getElementById('date').valueAsDate = new Date();
 
         Object.keys(menuData).forEach((category, index) => {
-            // Создаем кнопку вкладки
             const btn = document.createElement('button');
             btn.className = `tab-btn ${index === 0 ? 'active' : ''}`;
             btn.innerText = category;
             btn.onclick = () => openTab(category, btn);
             tabsDiv.appendChild(btn);
 
-            // Создаем секцию блюд
             const section = document.createElement('div');
             section.id = `section-${category}`;
             section.className = `menu-page ${index === 0 ? 'active' : ''}`;
@@ -171,19 +169,17 @@
         if (!cart[id]) cart[id] = { qty: 0, price: price, name: name };
         cart[id].qty += change;
         if (cart[id].qty < 0) cart[id].qty = 0;
-
         document.getElementById(`q-${id}`).innerText = cart[id].qty;
         document.getElementById(`minus-${id}`).disabled = cart[id].qty === 0;
-
         let total = 0;
-        for (let key in cart) {
-            total += cart[key].qty * cart[key].price;
-        }
+        for (let key in cart) total += cart[key].qty * cart[key].price;
         document.getElementById('total-price').innerText = total;
     }
 
     async function sendOrder() {
         const btn = document.getElementById('submit-btn');
+        const name = document.getElementById('user-name').value;
+        const phone = document.getElementById('user-phone').value;
         const guests = document.getElementById('guests').value;
         const date = document.getElementById('date').value;
         const time = document.getElementById('time').value;
@@ -193,6 +189,7 @@
             if (cart[id].qty > 0) summary += `${cart[id].name} (${cart[id].qty}), `;
         }
 
+        if (!name || !phone) return alert("Vennligst fyll ut navn og telefonnummer.");
         if (!summary) return alert("Vennligst velg minst én rett.");
         if (!date || !time) return alert("Vennligst velg dato og tid.");
 
@@ -200,7 +197,9 @@
         btn.innerText = "Sender...";
 
         const data = {
-            phone: `Gjester: ${guests} | Dato: ${date} | Tid: ${time}`,
+            customerName: name,
+            customerPhone: phone,
+            visitInfo: `Gjester: ${guests} | Dato: ${date} | Tid: ${time}`,
             order: summary.slice(0, -2),
             totalPrice: document.getElementById('total-price').innerText
         };
@@ -211,18 +210,15 @@
                 mode: 'no-cors',
                 body: JSON.stringify(data)
             });
-            alert("Takk! Bestillingen er sendt.");
+            alert("Takk, " + name + "! Bestillingen er sendt.");
             location.reload();
         } catch (e) {
-            alert("Noe gikk galt. Prøv igjen.");
+            alert("Feil. Prøv igjen.");
             btn.disabled = false;
             btn.innerText = "Send bestilling";
         }
     }
-
     init();
 </script>
 </body>
 </html>
-
-
