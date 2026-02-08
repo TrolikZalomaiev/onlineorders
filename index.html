@@ -105,22 +105,22 @@
             { id: "p1", name: "Margarita", desc: "Heimelaga italiensk bunn, rød saus, ost", price: 150 },
             { id: "p2", name: "Silliana", desc: "Silliana salami, rød saus, ost", price: 170 },
             { id: "p3", name: "Cæsar", desc: "Kvit saus, kylling, tomat, bacon, ost", price: 180 },
-            { id: "p4", name: "Nduja", desc: "Nduja (chillipølse), rød saus, løk, kjøttdeig, ost", price: 180 },
+            { id: "p4", name: "Nduja", desc: "Nduja (chillipølse), rød saus, løк, kjøttdeig, ost", price: 180 },
             { id: "p5", name: "Pesto-pizza", desc: "Fetaost, oliven, crispi-salat, pesto, ost", price: 170 },
             { id: "p6", name: "Hangoveren", desc: "Pepperoni, kjøttdeig, fries, kvitløksdressing, ost", price: 190 }
         ],
         "Pasta": [
             { id: "pa1", name: "Carbonara", desc: "Pasta, fløte, bacon, egg, parmesan", price: 165 },
-            { id: "pa2", name: "Nduja-pasta", desc: "Nduja (chillipølse), pasta, kvitløk, løk, parmensan", price: 175 },
+            { id: "pa2", name: "Nduja-pasta", desc: "Nduja (chillipølse), pasta, kvitløk, løк, parmensan", price: 175 },
             { id: "pa3", name: "Kyllingpasta", desc: "Pesto, fløte, grillet kylling, parmesan", price: 170 },
-            { id: "pa4", name: "Bolognese", desc: "Kjøttdeig, rød saus, løk, kvitløk, parmesan", price: 170 },
+            { id: "pa4", name: "Bolognese", desc: "Kjøttdeig, rød saus, løк, kvitløk, parmesan", price: 170 },
             { id: "pa5", name: "Pasta Pesto", desc: "Pesto, pasta, feta, rødløk, cherrytomat, parmesan", price: 165 }
         ],
         "Dessert & Barn": [
             { id: "de1", name: "Gulrotkake", desc: "Husets gulrotkake med topping", price: 85 },
             { id: "de2", name: "Lun Brownies", desc: "Heimelaga salt karamellsaus og vaniljeis", price: 85 },
             { id: "de3", name: "Affogato", desc: "Vaniljeis, cognackrem, espressoshot", price: 65 },
-            { id: "b1", name: "Barnemeny Minipizza", desc: "Heimelagsa Italiensk bunn, ost, skinke", price: 99 },
+            { id: "b1", name: "Barnemeny Minipizza", desc: "Heimelagsa Italiensk bunн, ost, skinke", price: 99 },
             { id: "b2", name: "Barnemeny Burger", desc: "Med fries", price: 99 },
             { id: "b3", name: "Pølse Med Brød/Fries", desc: "Klassisk barnemeny", price: 99 }
         ],
@@ -198,7 +198,8 @@
         const comment = document.getElementById('comment').value;
 
         let summary = "";
-        for (let id in cart) if (cart[id].qty > 0) summary += `${cart[id].name} (${cart[id].qty}), `;
+        // ИЗМЕНЕНИЕ ТУТ: Заменили запятую на \n для переноса строки
+        for (let id in cart) if (cart[id].qty > 0) summary += `${cart[id].name} (${cart[id].qty})\n`;
 
         if (!name || !phone) return alert("Vennligst fyll ut navn og telefonnummer.");
         if (!summary) return alert("Vennligst velg minst én rett.");
@@ -212,7 +213,8 @@
             customerPhone: phone,
             visitInfo: `Gjester: ${guests} | Dato: ${date} | Tid: ${time}`,
             comment: comment,
-            order: summary.slice(0, -2),
+            // ИЗМЕНЕНИЕ ТУТ: Используем trim() вместо slice, чтобы убрать лишний перенос в конце
+            order: summary.trim(),
             totalPrice: document.getElementById('total-price').innerText
         };
 
@@ -222,7 +224,7 @@
                 mode: 'no-cors',
                 body: JSON.stringify(data)
             });
-            alert("Tusen takk! Bestillingen er mottatt.");
+            alert("Tusen takк! Bestillingen er mottatt.");
             location.reload();
         } catch (e) {
             alert("Noe gikk galt. Prøv igjen.");
@@ -235,5 +237,3 @@
 </script>
 </body>
 </html>
-
-
