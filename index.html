@@ -198,7 +198,6 @@
         const comment = document.getElementById('comment').value;
 
         let summary = "";
-        // ИЗМЕНЕНИЕ ТУТ: Заменили запятую на \n для переноса строки
         for (let id in cart) if (cart[id].qty > 0) summary += `${cart[id].name} (${cart[id].qty})\n`;
 
         if (!name || !phone) return alert("Vennligst fyll ut navn og telefonnummer.");
@@ -213,7 +212,6 @@
             customerPhone: phone,
             visitInfo: `Gjester: ${guests} | Dato: ${date} | Tid: ${time}`,
             comment: comment,
-            // ИЗМЕНЕНИЕ ТУТ: Используем trim() вместо slice, чтобы убрать лишний перенос в конце
             order: summary.trim(),
             totalPrice: document.getElementById('total-price').innerText
         };
@@ -237,3 +235,4 @@
 </script>
 </body>
 </html>
+
